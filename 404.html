@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<title>
+			Portrait.Promo - Страница не найдена (ошибка 404)
+		</title>
+		<meta content="Креативное агентство в Москве, производство фото и видео, рекламы, разработка сайтов, ведение социальных сетей, организация промо-мероприятий" name="description">
+		<meta content="Portrait.Promo LTD" name="author">
+		<meta content="Портретный фотограф москва, бизнес портрет москва, фотосессия в студии москва, рекламная фотосъемка москва, изготовление сайтов москва, фотосессия москва, промоутеры москва" name="keywords">
+		<meta content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+		<!-- STYLE start -->
+			<link rel="shortcut icon" type="image/icon" href="/app/assets/img/favicon.png">
+			<link href="/app/assets/css/vendor.css" media="all" rel="stylesheet" type="text/css">
+			<link href="/app/assets/css/custom.css" media="all" rel="stylesheet" type="text/css">
+		<!-- STYLE end -->
+		<!-- Yandex.Metrika counter -->
+		<script type="text/javascript" >
+		   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+		   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+		   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+		   ym(65359615, "init", {
+		        clickmap:true,
+		        trackLinks:true,
+		        accurateTrackBounce:true,
+		        webvisor:true,
+		        trackHash:true
+		   });
+		</script>
+		<noscript><div><img src="https://mc.yandex.ru/watch/65359615" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+		<!-- /Yandex.Metrika counter -->
+	</head>
+	<body style="filter:grayscale(100%);">
+		<!-- PRELOADER start -->
+			<div class="preloader-bg"></div>
+			<div id="preloader">
+				<div id="preloader-status">
+					<div class="preloader-position loader">
+						<span></span>
+					</div>
+				</div>
+			</div>
+		<!-- PRELOADER end -->
+
+		<!-- PAGE start -->
+			<!-- HEADER start -->
+				<header></header>
+			<!-- HEADER end -->
+			
+			<!-- CONTENT start -->
+
+			<!-- CONTENT end -->
+		<!-- PAGE end -->
+		
+		<!-- SCRIPTS start -->
+			<script src="/app/assets/js/vendor.js"></script>
+			<script>
+				$(window).on("load", function() {
+					// 1. preloader
+					$("#preloader").fadeOut(600);
+					$(".preloader-bg").delay(400).fadeOut(600);
+				});
+				var home404 = `
+					<!-- wave start -->
+					<canvas id="wave"></canvas><!-- wave end -->
+					<!-- center container start -->
+					<div class="hero-center-container">
+						<!-- center block start -->
+						<div class="hero-center-block">
+							<!-- home page title start -->
+							<div class="introduction">
+								<h1 class="home-page-title">
+								   <span></span>404<span ></span>
+								</h1>
+								<h2 class="home-page-subtitle">
+									Страница не найдена
+								</h2>
+							</div><!-- home page title end -->
+						</div><!-- center block end -->
+					</div><!-- center container end -->
+					<!-- hero bg start -->
+					<div class="hero-fullscreen overlay overlay-top-bottom-dark-85">
+						<!-- hero fullscreen slider start -->
+						<div class="hero-bg slick-fullscreen-slideshow-zoom-fade">
+							<!-- fullscreen slider item 1 start -->
+							<div class="slick-fullscreen-item">
+								<div class="slick-fullscreen-img-fill">
+									<div class="bg-img bg-img-1"></div>
+								</div>
+							</div><!-- fullscreen slider item 1 end -->
+							<!-- fullscreen slider item 2 start -->
+							<div class="slick-fullscreen-item">
+								<div class="slick-fullscreen-img-fill">
+									<div class="bg-img bg-img-2"></div>
+								</div>
+							</div><!-- fullscreen slider item 2 end -->
+							<!-- fullscreen slider item 3 start -->
+							<div class="slick-fullscreen-item">
+								<div class="slick-fullscreen-img-fill">
+									<div class="bg-img bg-img-3"></div>
+								</div>
+							</div><!-- fullscreen slider item 3 end -->
+							<!-- fullscreen slider item 4 start -->
+							<div class="slick-fullscreen-item">
+								<div class="slick-fullscreen-img-fill">
+									<div class="bg-img bg-img-4"></div>
+								</div>
+							</div><!-- fullscreen slider item 4 end -->
+						</div><!-- hero fullscreen slider end -->
+					</div><!-- hero bg end -->`;
+				$('#launcher').load('/app/launcher/app.html');
+				$('header').load('/header.html', function(){$("#home").html(home404);});
+				$('footer').load('/footer.html');
+			</script>
+		<!-- SCRIPTS end -->
+	</body>
+</html>

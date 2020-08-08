@@ -1,0 +1,222 @@
+<!-- LAUNCHER MODAL start -->
+	<div id="launcher-modal">
+		<div class="launcher-modal-overlay">
+			<div id="launcher-scroll-indicator" class="scroll-indicator"></div>
+			<i class="fa fa-times launcher-widgets-button"></i>
+		</div>
+		<div id="launcher-modal-panel">
+			<i id="launcher-modal-panel-close" class="fa fa-times launcher-widgets-button"></i>
+			<div class="search-box" style="color:#202020;">
+				<span name="contact" class="fa fa-phone" title="Контакты"></span>
+				<span name="explorer" class="fa fa-search" title="Исследовать: новости, конструктор заказа"></span>
+				<input id="search_input" name="story" placeholder="Поиск по сайту..." type="text">
+			</div>
+		</div>
+		<div id="search-results-container">
+		</div>
+		<div id="launcher-modal-content"></div>
+	</div>
+<!-- LAUNCHER MODAL end -->
+<!-- LAUNCHER WIDGETS start -->
+	<div id="launcher-widgets-panel">
+		<i name="contact" class="fa fa-phone launcher-widgets-button"></i><i name="explorer" class="fa fa-search launcher-widgets-button"></i><!-- <i name="gallery" class="fa fa-th launcher-widgets-button"></i>
+ -->	</div>
+<!-- LAUNCHER WIDGETS end -->
+<script>
+	//LAUNCHER APP
+	class appLauncher{
+		constructor(obj){
+			this.modal = obj;
+			this.init();
+			this.title_original = $('title').html();
+		}
+		init(){
+			var launcher = this,
+				loc = (location.host+location.pathname).split('?')[0];
+
+			//1. CLOSE
+			this.modal.hide();
+			$("#search-results-container").hide();
+			$(".launcher-modal-overlay").on("click", function(){
+				launcher.hide();
+			});
+			$("#launcher-modal-panel-close").on("click", function(){
+				launcher.hide();
+			});
+
+			//2. OPEN
+			$(".search-box span").on("click", function(){
+				launcher.update($(this).attr('name'));
+			});
+			$(".sale-button").on("click", function(){
+				launcher.update('contact');
+			});
+			$(".portfolio-button").on("click", function(){
+				launcher.update($(this).attr('name'), 'portfolio');
+			});
+			$("#launcher-widgets-panel i").on("click", function(){
+				launcher.update($(this).attr('name'));
+			});
+			switch(location.search.substr(1)){
+				case "contact":
+				case "explorer":
+					launcher.update(location.search.substr(1));
+			}
+			window.onpopstate = function(e){
+				if(location.host+location.pathname==loc){
+					launcher.hide();
+				}
+			}
+		}
+		hide(){
+			$('body').css('overflow', '');
+			this.modal.fadeOut('fast');
+			$('title').html(this.title_original)
+			try{
+				history.pushState(null, null, location.pathname);
+			}catch{}
+		}
+		update(section, portfolio){
+			$("#preloader").show();
+			$('#launcher-modal-content').css('opacity','0');
+			if(!portfolio){
+				history.pushState(null, null, location.pathname+'?'+section);
+			}else{
+				history.pushState(null, null, location.pathname+'?'+'portfolio');
+			}
+			$('body').css('overflow', 'hidden');
+
+			$('.mobx-holder').remove();
+			let search_area = "сайту";
+			let class_color = "blue";
+			switch(section){
+				case "contact":
+					$('title').html('Portrait.Promo - Контакты');
+					break;
+				case "explorer":
+					$('title').html('Portrait.Promo - Исследовать');
+					class_color = "red";
+			}
+			$(".search-box span").each(function(i,e){
+				$(e).removeClass("red");
+				$(e).removeClass("blue");
+			});
+			$(".search-box span[name='"+section+"']").addClass(class_color);
+
+			setTimeout(() => $('#launcher-modal-content').load("/"+section+".html", function(){
+				$('#launcher-modal-content').css('opacity','1');
+				$("#preloader").fadeOut(500);
+				$(".preloader-bg").delay(400).fadeOut(600);
+			}), 500);
+
+			this.modal.fadeIn('slow');
+		}
+	}
+	//1. INIT
+	new appLauncher($('#launcher-modal'));
+
+
+	//PROGRESS-BAR
+	function modalContent_init(recid){
+		var modalContent_lastCall,
+				modalContent_timeoutId,
+				modalContent_interval = 100;
+		$("#launcher-modal-content").scroll( function() {
+			var modalContent_now = new Date().getTime();
+			if (modalContent_lastCall && modalContent_now < (modalContent_lastCall + modalContent_interval) ) {
+					clearTimeout(modalContent_timeoutId);
+					modalContent_timeoutId = setTimeout(function () {
+							modalContent_lastCall = modalContent_now;
+							modalContent_setProgressBarWidth(recid);
+					}, modalContent_interval - (modalContent_now - modalContent_lastCall) );
+			} else {
+					modalContent_lastCall = modalContent_now;
+					modalContent_setProgressBarWidth(recid);
+			}
+		});
+	}
+
+	function modalContent_setProgressBarWidth(recid) {
+		var modalContent_windowScrollTop = $("#launcher-modal-content").scrollTop(),
+			modalContent_winHeigh = $("#launcher-modal-content").height(),
+			modalContent_docHeight = document.getElementById('launcher-modal-content').scrollHeight,
+			modalContent_scrollPercent = (modalContent_windowScrollTop / (modalContent_docHeight-modalContent_winHeigh)) * 100,
+			startColor = [0,220,255], //RGB
+			endColor = [255,32,73], //RGB
+			currentColor = [
+				Math.round(startColor[0]+(endColor[0]-startColor[0])/100*modalContent_scrollPercent),
+				Math.round(startColor[1]+(endColor[1]-startColor[1])/100*modalContent_scrollPercent),
+				Math.round(startColor[2]+(endColor[2]-startColor[2])/100*modalContent_scrollPercent)
+			];
+		$("#launcher-scroll-indicator").css('width', modalContent_scrollPercent + '%');
+  		$("#launcher-scroll-indicator").css('background', "rgb("+currentColor[0]+","+currentColor[1]+","+currentColor[2]+")");
+	}
+
+	modalContent_init();
+	modalContent_setProgressBarWidth();
+
+	if ($(this).scrollTop() > 10) {
+		$("#launcher-widgets-panel").addClass("launcher-widgets-panel-primary");
+	} else {
+		$("#launcher-widgets-panel").removeClass("launcher-widgets-panel-primary");
+	}
+	$(window).on("scroll", function() {
+		if ($(this).scrollTop() > 10) {
+			$("#launcher-widgets-panel").addClass("launcher-widgets-panel-primary");
+		} else {
+			$("#launcher-widgets-panel").removeClass("launcher-widgets-panel-primary");
+		}
+	});
+</script>
+<script>
+	//Поиск из JSON
+	function showResults(str){
+		console.log('НАШЕЛ совпадение по '+str+' !');
+	}
+	function liveSearch(){
+		var found = false,
+			results = "";
+		$.getJSON("https://portrait.promo/app/db/services.json", function(JSON){
+		    for(var i = 0; i<JSON.Services.length; i++){
+		    	for(var x = 0; x<JSON.Services[i].Keys.length; x++){
+	    			if(JSON.Services[i].Keys[x].indexOf($('#search_input').val().toLowerCase()) == 0){
+	    				if(!found){
+	    					found = true;
+	    				}
+	    				results += "<div class='search-result'><a href='"+JSON.Services[i].Link+"'>"+JSON.Services[i].Title+"</a></div>";
+	    				showResults($('#search_input').val().toLowerCase());
+						i++;x=0;
+						if(JSON.Services[i] == undefined){
+							break;
+						}
+	    			}
+		    	}
+		    }
+		    if(!found){
+		    	$('#search-results-container').hide();
+		    	$('#search_input').css("border-radius","10px");
+		    }else{
+		    	$('#search-results-container').html(results);
+		    	$('#search-results-container').show();
+		    	$('#search_input').css("border-radius","10px 10px 0 0");
+		    }
+		});
+		
+
+	}
+	$('#search_input').keyup(function() {
+		if($('#search_input').val().length>0){liveSearch()}
+		else{
+			$('#search-results-container').hide();
+			$('#search_input').css("border-radius","10px");
+		}
+
+	});
+
+	// jQuery(this).html().replace(new RegExp(term, 'ig'), '<span class="highlight">$&</span>');
+	// $(".search-box span[name='filter']").on('click', function(){
+	// 	$(".search-box span[name='filter']").toogleClass("active");
+	// 	$(".search-box span[name='filter']").toogleClass("active");
+	// });
+	
+</script>
