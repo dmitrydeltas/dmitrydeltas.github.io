@@ -2949,13 +2949,13 @@ h2.section-heading.section-heading-all {
 	-ms-animation: rotate 1s infinite linear;
 	-o-animation: rotate 1s infinite linear;
 	animation: rotate 1s infinite linear;
-	border: 3px solid rgba(255, 255, 255, .15);
+	/*border: 3px solid rgba(255, 255, 255, .15);*/
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	-ms-border-radius: 50%;
 	-o-border-radius: 50%;
 	border-radius: 50%;
-	
+	padding:5px;
 }
 
 .loader span {
