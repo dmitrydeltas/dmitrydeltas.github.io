@@ -1571,7 +1571,7 @@ a:hover .c-btn {
 	font-family: RussoOne, sans-serif;
 	font-size: 35px;
 	font-weight: 800;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	line-height: 1.2;
 	text-align: center;
 	color: #fff;
@@ -1605,7 +1605,7 @@ a:hover .c-btn {
 	font-weight: 600;
 	font-size: 13px;
 	letter-spacing: 0.15em;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	text-decoration: none;
 	color: #fff;
 	padding: 0 25px;
